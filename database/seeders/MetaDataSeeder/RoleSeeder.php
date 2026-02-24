@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\MetaDataSeeder;
 
-use InsureTech\\RolePermission\\Models\\RolesModel;
+use SajidJalal\\RolePermission\\Models\\RolesModel;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder

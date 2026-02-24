@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 
-namespace InsureTech\RolePermission\Models;
+namespace SajidJalal\PermissionKit\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Cache;
 class RolesModel extends Model
 {
     use SoftDeletes;
-
     protected $table  = "roles";
     protected $guarded = [];
 
@@ -34,7 +33,9 @@ class RolesModel extends Model
     {
         $cacheKey = 'get_role_list' . $createdByRoleId;
 
-        return Cache::remember($cacheKey, now()->addMinutes(CACHE_KEY_CLEAR_TIME), function () {
+        $ttl = config('permission-kit.cache.ttl', 60);
+
+        return Cache::remember($cacheKey, now()->addMinutes($ttl), function () {
             return self::select('id', 'role_name', 'display_name')
                 ->where('status', 1)
                 ->whereNotIn('id', [SUPER_ADMIN_ROLE_ID])
@@ -45,8 +46,8 @@ class RolesModel extends Model
     public static function getRoleName($roleId)
     {
         $cacheKey = 'get_role_name' . $roleId;
-
-        $roleList = Cache::remember($cacheKey, now()->addMinutes(CACHE_KEY_CLEAR_TIME), function () {
+        $ttl = config('permission-kit.cache.ttl', 60);
+        $roleList = Cache::remember($cacheKey, now()->addMinutes($ttl), function () {
             return self::select('id', 'role_name', 'display_name')
                 ->where('status', 1)
                 ->whereNotIn('id', [SUPER_ADMIN_ROLE_ID])
@@ -56,8 +57,9 @@ class RolesModel extends Model
         return $roleList->where('id', $roleId)->first()->display_name ?? '';
     }
 
+
     public function createdBy()
     {
-        return $this->belongsTo(\App\Models\User::class, 'created_by')->withDefault();
+        return $this->belongsTo(User::class, 'created_by')->withDefault();
     }
 }

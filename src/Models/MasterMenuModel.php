@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 
-namespace InsureTech\RolePermission\Models;
+namespace SajidJalal\PermissionKit\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

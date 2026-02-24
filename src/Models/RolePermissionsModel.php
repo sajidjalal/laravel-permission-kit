@@ -1,7 +1,8 @@
-﻿<?php
+<?php
 
-namespace InsureTech\RolePermission\Models;
+namespace SajidJalal\PermissionKit\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class RolePermissionsModel extends Model
@@ -11,7 +12,7 @@ class RolePermissionsModel extends Model
 
     public function creator()
     {
-        return $this->belongsTo(\App\Models\User::class, 'created_by', 'id');
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
     public function role()
