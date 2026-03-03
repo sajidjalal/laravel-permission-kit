@@ -35,7 +35,6 @@ class PermissionKitServiceProvider extends ServiceProvider
 
         $configPath = __DIR__ . '/../config/permission-kit.php';
         $migrationsPath = __DIR__ . '/../database/migrations';
-        $seedersPath = __DIR__ . '/../database/seeders';
 
         // Publish config
         if (file_exists($configPath)) {
@@ -49,13 +48,6 @@ class PermissionKitServiceProvider extends ServiceProvider
             $this->publishes([
                 $migrationsPath => database_path('migrations'),
             ], 'permission-kit-migrations');
-        }
-
-        // Publish seeders
-        if (is_dir($seedersPath)) {
-            $this->publishes([
-                $seedersPath => database_path('seeders'),
-            ], 'permission-kit-seeders');
         }
     }
 }

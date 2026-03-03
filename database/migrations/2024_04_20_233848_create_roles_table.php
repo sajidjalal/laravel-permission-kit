@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use SajidJalal\PermissionKit\Models\MasterMenuModel;
+use SajidJalal\PermissionKit\Models\RolePermissionsModel;
+use SajidJalal\PermissionKit\Models\RolesModel;
 
 return new class extends Migration {
     public function up(): void
@@ -75,6 +78,142 @@ return new class extends Migration {
             $table->unique(['role_id', 'menu_id']);
             $table->index('status');
         });
+
+        $roles = [
+            [
+                'id' => 1,
+                'role_name' => 'super admin',
+                'role_prefix' => "Super",
+                'display_name' => 'Super Admin',
+                'description' => null,
+                'status' => 1,
+                'is_admin' => 0,
+                'sequence' => 0,
+                'created_by' => null,
+                'updated_by' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 2,
+                'role_name' => 'admin',
+                'role_prefix' => "ADM",
+                'display_name' => 'Admin',
+                'description' => null,
+                'is_admin' => 1,
+                'status' => 1,
+                'sequence' => 0,
+                'created_by' => null,
+                'updated_by' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ],
+
+
+        ];
+
+        // Using upsert for updating or inserting records
+        RolesModel::upsert(
+            $roles,
+            ['id'],
+            ['role_name', 'role_prefix', 'display_name', 'description', 'status', 'is_admin', 'sequence', 'updated_at', 'deleted_at']
+        );
+
+        $master_menu = [
+            [
+                'id' => 1,
+                'permissions_name' => 'group',
+                'display_permissions_name' => 'Permission Management',
+                'menu_for' => 'admin',
+                'sub_menu_for' => null,
+                'group_name' => 'Application',
+                'menu_name' => 'Roles & Permission',
+                'sequence' => 1,
+                'url' => 'permission',
+                'menu_description' => null,
+                'icon' => 'images/svg/roles-and-permission.svg',
+                'fa_icon' => 'fa fa-thumb-tack',
+                'parent_id' => 0,
+                'is_menu_show' => 1,
+                'is_permission_show' => 1,
+                'status' => 1,
+                'created_by' => null,
+                'updated_by' => null,
+                'created_at' => '2026-02-24 18:03:22',
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 2,
+                'permissions_name' => 'role_management',
+                'display_permissions_name' => 'Role Management',
+                'menu_for' => 'admin',
+                'sub_menu_for' => null,
+                'group_name' => 'Application',
+                'menu_name' => 'Roles List',
+                'sequence' => 1,
+                'url' => 'roles',
+                'menu_description' => null,
+                'icon' => 'images/svg/icon-sprite.svg#stroke-learning',
+                'fa_icon' => 'fa fa-thumb-tack',
+                'parent_id' => 1,
+                'is_menu_show' => 1,
+                'is_permission_show' => 1,
+                'status' => 1,
+                'created_by' => null,
+                'updated_by' => null,
+                'created_at' => '2026-02-24 18:03:22',
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+        ];
+
+        MasterMenuModel::upsert(
+            $master_menu,
+            ['id'],
+            ['permissions_name', 'display_permissions_name', 'menu_for', 'sub_menu_for', 'group_name', 'menu_name', 'sequence', 'url', 'menu_description', 'icon', 'fa_icon', 'parent_id', 'is_menu_show', 'is_permission_show', 'status', 'updated_at', 'deleted_at']
+        );
+
+        $role_permissions = [
+            [
+                'id' => 1,
+                'role_id' => 1,
+                'menu_id' => 1,
+                'create' => 1,
+                'read' => 1,
+                'update' => 1,
+                'delete' => 1,
+                'status' => 1,
+                'created_by' => 1,
+                'updated_by' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 2,
+                'role_id' => 1,
+                'menu_id' => 2,
+                'create' => 1,
+                'read' => 1,
+                'update' => 1,
+                'delete' => 1,
+                'status' => 1,
+                'created_by' => 1,
+                'updated_by' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ],
+        ];
+
+        RolePermissionsModel::upsert(
+            $role_permissions,
+            ['id'],
+            ['role_id', 'menu_id', 'create', 'read', 'update', 'delete', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at']
+        );
     }
 
     public function down(): void

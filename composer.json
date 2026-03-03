@@ -15,9 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SajidJalal\\PermissionKit\\": "src/",
-            "SajidJalal\\PermissionKit\\Database\\Seeders\\": "database/seeders/"
-        },
+            "SajidJalal\\PermissionKit\\": "src/"        },
         "files": [
             "src/helpers.php"
         ]
