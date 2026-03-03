@@ -214,6 +214,12 @@ return new class extends Migration {
             ['id'],
             ['role_id', 'menu_id', 'create', 'read', 'update', 'delete', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at']
         );
+
+        if (!Schema::hasTable('users')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->unsignedMediumInteger('role_id')->nullable()->after('id');
+            });
+        }
     }
 
     public function down(): void
