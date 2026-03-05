@@ -1,6 +1,6 @@
 <?php
 
-namespace SajidJalal\PermissionKit\Models;
+namespace sj\PermissionKit\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

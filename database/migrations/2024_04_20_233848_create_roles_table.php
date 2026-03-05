@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use SajidJalal\PermissionKit\Models\MasterMenuModel;
-use SajidJalal\PermissionKit\Models\RolePermissionsModel;
-use SajidJalal\PermissionKit\Models\RolesModel;
+use sj\PermissionKit\Models\MasterMenuModel;
+use sj\PermissionKit\Models\RolePermissionsModel;
+use sj\PermissionKit\Models\RolesModel;
 
 return new class extends Migration {
     public function up(): void
@@ -215,16 +215,17 @@ return new class extends Migration {
             ['role_id', 'menu_id', 'create', 'read', 'update', 'delete', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at']
         );
 
-        if (!Schema::hasTable('users')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->unsignedMediumInteger('role_id')->nullable()->after('id');
-            });
+        if (Schema::hasTable('users')) {
+            if (!Schema::hasColumn('users', 'role_id')) {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->unsignedMediumInteger('role_id')->nullable()->after('id');
+                });
+            }
         }
     }
 
     public function down(): void
     {
-        // Drop in reverse order (foreign keys first)
         Schema::dropIfExists('role_permissions');
         Schema::dropIfExists('master_menu');
         Schema::dropIfExists('roles');
