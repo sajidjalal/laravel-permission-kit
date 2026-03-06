@@ -12,7 +12,7 @@ class RolesModel extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('permission-kit.tables.permissions', 'rbac_roles'));
+        $this->setTable(config('permission-kit.tables.roles', 'rbac_roles'));
     }
 
     protected $guarded = [];

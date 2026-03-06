@@ -3,35 +3,18 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Log;
 use SajidJalal\PermissionKit\Models\MasterMenuModel;
-use SajidJalal\PermissionKit\Models\RolePermissionsModel;
 use SajidJalal\PermissionKit\Models\RolesModel;
+use SajidJalal\PermissionKit\Models\RolePermissionsModel;
 
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('reporting_role_id')->default(0)->nullable();
-            $table->string('role_name', 80);
-            $table->string('display_name', 100)->nullable();
-            $table->string('role_prefix', 25)->nullable();
-            $table->string('description', 250)->nullable();
-            $table->boolean('is_admin')->default(false);
-            $table->boolean('status')->default(true);
-            $table->unsignedSmallInteger('sequence')->default(0);
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
 
-            // Index on frequently queried columns
-            $table->index('status');
-            $table->index('is_admin');
-            $table->index(['created_by', 'created_at']);
-        });
+        $tableNames = config('permission-kit.tables');
 
-        Schema::create('master_menu', function (Blueprint $table) {
+        Schema::create($tableNames['master_menu'], function (Blueprint $table) {
             $table->id();
             $table->string('permissions_name', 50);
             $table->string('display_permissions_name', 50);
@@ -60,7 +43,32 @@ return new class extends Migration {
             $table->index(['group_name', 'status']);
         });
 
-        Schema::create('role_permissions', function (Blueprint $table) {
+        Log::info('Master menu table created successfully.');
+
+        Schema::create($tableNames['roles'], function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('reporting_role_id')->default(0)->nullable();
+            $table->string('role_name', 80);
+            $table->string('display_name', 100)->nullable();
+            $table->string('role_prefix', 25)->nullable();
+            $table->string('description', 250)->nullable();
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('status')->default(true);
+            $table->unsignedSmallInteger('sequence')->default(0);
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
+            // Index on frequently queried columns
+            $table->index('status');
+            $table->index('is_admin');
+            $table->index(['created_by', 'created_at']);
+        });
+
+        Log::info('Role table created successfully.');
+
+        Schema::create($tableNames['role_permissions'], function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('menu_id');
@@ -78,6 +86,8 @@ return new class extends Migration {
             $table->unique(['role_id', 'menu_id']);
             $table->index('status');
         });
+
+        Log::info('Role permissions table created successfully.');
 
         $roles = [
             [
@@ -120,6 +130,8 @@ return new class extends Migration {
             ['id'],
             ['role_name', 'role_prefix', 'display_name', 'description', 'status', 'is_admin', 'sequence', 'updated_at', 'deleted_at']
         );
+
+        Log::info('Default roles inserted successfully.');
 
         $master_menu = [
             [
@@ -176,6 +188,8 @@ return new class extends Migration {
             ['permissions_name', 'display_permissions_name', 'menu_for', 'sub_menu_for', 'group_name', 'menu_name', 'sequence', 'url', 'menu_description', 'icon', 'fa_icon', 'parent_id', 'is_menu_show', 'is_permission_show', 'status', 'updated_at', 'deleted_at']
         );
 
+        Log::info('Default master menu items inserted successfully.');
+
         $role_permissions = [
             [
                 'id' => 1,
@@ -215,6 +229,8 @@ return new class extends Migration {
             ['role_id', 'menu_id', 'create', 'read', 'update', 'delete', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at']
         );
 
+        Log::info('Default role permissions inserted successfully.');
+
         if (Schema::hasTable('users')) {
             if (!Schema::hasColumn('users', 'role_id')) {
                 Schema::table('users', function (Blueprint $table) {
@@ -222,12 +238,15 @@ return new class extends Migration {
                 });
             }
         }
+        Log::info('User table updated successfully.');
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('role_permissions');
-        Schema::dropIfExists('master_menu');
-        Schema::dropIfExists('roles');
+        $tableNames = config('permission-kit.tables');
+
+        Schema::dropIfExists($tableNames['role_permissions']);
+        Schema::dropIfExists($tableNames['master_menu']);
+        Schema::dropIfExists($tableNames['roles']);
     }
 };

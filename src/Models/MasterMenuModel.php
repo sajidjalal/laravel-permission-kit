@@ -12,10 +12,9 @@ class MasterMenuModel extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('permission-kit.tables.permissions', 'rbac_master_menu'));
+        $this->setTable(config('permission-kit.tables.master_menu', 'rbac_master_menu'));
     }
 
-    protected $table = 'master_menu';
     protected $guarded = [];
 
     public function rolePermissions()
