@@ -1,9 +1,9 @@
 <?php
 
-namespace sj\PermissionKit;
+namespace SajidJalal\PermissionKit;
 
 use Illuminate\Support\ServiceProvider;
-use sj\PermissionKit\Helpers\PermissionHelper;
+use SajidJalal\PermissionKit\Helpers\PermissionHelper;
 
 class PermissionKitServiceProvider extends ServiceProvider
 {

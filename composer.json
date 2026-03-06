@@ -1,5 +1,5 @@
 {
-    "name": "sj/laravel-permission-kit",
+    "name": "sajidjalal/laravel-permission-kit",
     "description": "A lightweight and flexible permission management kit for Laravel applications.",
     "type": "library",
     "license": "MIT",
@@ -18,11 +18,11 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/support": "^10.0|^11.0|^12.0"
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0"
     },
     "autoload": {
         "psr-4": {
-            "Sj\\PermissionKit\\": "src/"
+            "SajidJalal\\PermissionKit\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -31,10 +31,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Sj\\PermissionKit\\PermissionKitServiceProvider"
+                "SajidJalal\\PermissionKit\\PermissionKitServiceProvider"
             ],
             "aliases": {
-                "RolePermission": "Sj\\PermissionKit\\Facades\\Permission"
+                "RolePermission": "SajidJalal\\PermissionKit\\Facades\\Permission"
             }
         }
     },

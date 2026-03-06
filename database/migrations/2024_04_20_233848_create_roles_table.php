@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use sj\PermissionKit\Models\MasterMenuModel;
-use sj\PermissionKit\Models\RolePermissionsModel;
-use sj\PermissionKit\Models\RolesModel;
+use SajidJalal\PermissionKit\Models\MasterMenuModel;
+use SajidJalal\PermissionKit\Models\RolePermissionsModel;
+use SajidJalal\PermissionKit\Models\RolesModel;
 
 return new class extends Migration {
     public function up(): void

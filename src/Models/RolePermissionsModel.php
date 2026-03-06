@@ -1,6 +1,6 @@
 <?php
 
-namespace sj\PermissionKit\Models;
+namespace SajidJalal\PermissionKit\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;

@@ -1,10 +1,10 @@
 <?php
 
-namespace sj\PermissionKit\Helpers;
+namespace SajidJalal\PermissionKit\Helpers;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use sj\PermissionKit\Models\MasterMenuModel;
+use SajidJalal\PermissionKit\Models\MasterMenuModel;
 
 
 class PermissionHelper
@@ -74,7 +74,7 @@ class PermissionHelper
     {
         try {
             if ($includeAll) {
-                $roles = \sj\PermissionKit\Models\RolesModel::all();
+                $roles = \SajidJalal\PermissionKit\Models\RolesModel::all();
             } else {
                 if (!$user) {
                     return $asArray ? [] : collect([]);
@@ -104,7 +104,7 @@ class PermissionHelper
     {
         try {
             if ($includeAll) {
-                $permissions = \sj\PermissionKit\Models\RolePermissionsModel::all();
+                $permissions = \SajidJalal\PermissionKit\Models\RolePermissionsModel::all();
             } else {
                 if (!$user) {
                     return $asArray ? [] : collect([]);
@@ -165,7 +165,7 @@ class PermissionHelper
     public function getAllRoles()
     {
         try {
-            return \sj\PermissionKit\Models\RolesModel::all();
+            return \SajidJalal\PermissionKit\Models\RolesModel::all();
         } catch (\Exception $e) {
             return collect([]);
         }
@@ -177,7 +177,7 @@ class PermissionHelper
     public function getAllPermissions()
     {
         try {
-            return \sj\PermissionKit\Models\RolePermissionsModel::all();
+            return \SajidJalal\PermissionKit\Models\RolePermissionsModel::all();
         } catch (\Exception $e) {
             return collect([]);
         }
@@ -213,7 +213,7 @@ class PermissionHelper
     public function getRole($roleName)
     {
         try {
-            return \sj\PermissionKit\Models\RolesModel::where('name', $roleName)->first();
+            return \SajidJalal\PermissionKit\Models\RolesModel::where('name', $roleName)->first();
         } catch (\Exception $e) {
             return null;
         }
@@ -225,7 +225,7 @@ class PermissionHelper
     public function getPermission($permissionName)
     {
         try {
-            return \sj\PermissionKit\Models\RolePermissionsModel::where('name', $permissionName)->first();
+            return \SajidJalal\PermissionKit\Models\RolePermissionsModel::where('name', $permissionName)->first();
         } catch (\Exception $e) {
             return null;
         }

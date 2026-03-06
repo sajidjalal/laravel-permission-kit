@@ -1,6 +1,6 @@
 <?php
 
-namespace sj\PermissionKit\Facades;
+namespace SajidJalal\PermissionKit\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
