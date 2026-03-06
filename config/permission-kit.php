@@ -28,9 +28,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'tables' => [
-        'roles' => 'roles',
-        'permissions' => 'permissions',
-        'role_permissions' => 'role_permissions',
-        'master_menu' => 'master_menu',
+        'roles' => 'rbac_roles',
+        'role_permissions' => 'rbac_role_permissions',
+        'master_menu' => 'rbac_master_menu',
     ],
 ];

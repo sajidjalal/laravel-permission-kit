@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Cache;
 class RolesModel extends Model
 {
     use SoftDeletes;
-    protected $table  = "roles";
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->setTable(config('permission-kit.tables.permissions', 'rbac_roles'));
+    }
+
     protected $guarded = [];
 
     const IS_ADMIN = 1;

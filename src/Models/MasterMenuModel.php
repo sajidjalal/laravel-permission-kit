@@ -9,6 +9,12 @@ class MasterMenuModel extends Model
 {
     use SoftDeletes;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->setTable(config('permission-kit.tables.permissions', 'rbac_master_menu'));
+    }
+
     protected $table = 'master_menu';
     protected $guarded = [];
 

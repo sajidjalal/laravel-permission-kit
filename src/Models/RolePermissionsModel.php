@@ -1,13 +1,17 @@
 <?php
 
-namespace SajidJalal\PermissionKit\Models;
+namespace sj\PermissionKit\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class RolePermissionsModel extends Model
 {
-    protected $table = 'role_permissions';
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->setTable(config('permission-kit.tables.permissions', 'rbac_role_permissions'));
+    }
     protected $guarded = [];
 
     public function creator()
